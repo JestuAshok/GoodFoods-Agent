@@ -5,7 +5,7 @@ GoodFoods is a conversational AI that helps users discover restaurants and book 
 
 ### Repository Structure
 - `app_goodfoods.py`: Streamlit frontend (chat UI, live agent trace, theming)
-- `agent/conversation_engine.py`: Agent core (OpenAI calls, tool handling)
+- `agent/conversation_engine.py`: Agent core (Groq AI calls, tool handling)
 - `agent/toolkit.py`: Tool definitions (Groq(Llama) function schemas)
 - `agent/prompt_library.py`: System prompts and few-shot examples
 - `data/service_api.py`: FastAPI backend (search and reservation endpoints)

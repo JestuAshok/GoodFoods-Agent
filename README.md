@@ -1,278 +1,103 @@
-# GoodFoods
-Agentic AI restaurant reservation system using Grok(Llama 3), FastAPI backend, and Streamlit UI with tool-based execution and guardrails.
-
-
-```markdown
-# 🍽️ GoodFoods Reservation System (Agentic AI using Groq + LLaMA)
-
-## 🚀 Overview
-
-GoodFoods is a conversational AI reservation assistant that helps users discover restaurants and book tables across Bangalore.
-
-The system uses **Groq’s ultra-fast LLaMA inference** to power an Agentic AI workflow that can:
-
-- 🔍 Search restaurants based on cuisine/location
-- 🧠 Decide when to use backend tools
-- 📅 Collect reservation details
-- ✅ Validate party size constraints
-- 🎟️ Confirm bookings instantly
-
-This project demonstrates a full end-to-end **Agentic AI architecture** integrating:
-
-- ⚡ Groq (LLaMA model)
-- 🧠 Tool-calling agent loop
-- ⚙️ FastAPI backend (execution layer)
-- 💬 Streamlit chat UI
-- 📂 JSON-based prototype database
-
----
-
-## 🏗️ System Architecture
-
-```
-
-User (Streamlit UI)
-↓
-Conversation Engine (Groq LLaMA + Tools)
-↓
-FastAPI Backend (Execution Layer)
-↓
-JSON Data Store (Restaurants + Bookings)
-
-```
-
-### 🔄 Agent Loop
-
-1. User sends message via Streamlit
-2. LLaMA model plans response and may generate a tool call
-3. Tool executes through FastAPI
-4. Tool result is appended to conversation
-5. Model generates final assistant response
-
-This two-step reasoning loop prevents hallucination and ensures grounded execution.
-
----
-
-## 📂 Repository Structure
-
-```
-
-GoodFoods/
-
-│
-├── app_goodfoods.py              # Streamlit frontend UI
-
-├── start.py                      # One-command launcher
-
-│
-├── agent/
-
-│   ├── conversation_engine.py    # Core agent logic
-
-│   ├── toolkit.py                # Tool schemas
-
-│   └── prompt_library.py         # System prompt + guardrails
-
-│
-├── data/
-
-│   ├── service_api.py            # FastAPI backend
-
-│   ├── restaurant_list.json      # Restaurant catalog
-
-│   └── bookings_list.json        # Reservation storage
-
-│
-├── requirements.txt
-
-└── README.md
-
-````
-
----
-
-## 🛠️ Tools (Function-Calling Style)
-
-### 1️⃣ lookup_dining_options
-
-Search restaurants by:
-- name
-- location
-- cuisine
-
-Returns ranked restaurant matches.
-
----
-
-### 2️⃣ confirm_table_booking
-
-Create reservation using:
-- restaurant_id
-- orderer_name
-- orderer_contact
-- party_size
-- reservation_date
-- reservation_time
-
-Includes:
-- Capacity validation guardrail
-- Order ID generation
-- Booking persistence
-
----
-
-## 🧠 Prompt Engineering Strategy
-
-- Clear role definition (GoodFoods Bangalore Assistant)
-- Step-by-step task flow: discover → collect details → confirm
-- Tool usage guidance
-- Guardrails against hallucination
-- Friendly conversational tone
-- Structured behavior for missing information
-
----
-
-## 📊 Business Problem
-
-Manual reservation workflows are:
-- Slow
-- Expensive
-- Inconsistent
-
-### 💡 Solution
-
-An AI-powered reservation assistant that:
-- Automates discovery
-- Collects booking details conversationally
-- Validates constraints
-- Confirms instantly
-
-### 📈 Business Value
-
-- Increased booking conversion
-- Reduced staffing costs
-- Faster time-to-book
-- 24/7 automation
-
----
-
-## ⚙️ Setup Instructions
-
-### 1️⃣ Clone the repository
-
-```bash
-git clone <repo-url>
-cd GoodFoods
-````
-
----
-
-### 2️⃣ Create virtual environment
-
-```bash
-python -m venv venv
-```
-
-Activate:
-
-Windows:
-
-```
-venv\Scripts\activate
-```
-
-Mac/Linux:
-
-```
-source venv/bin/activate
-```
-
----
-
-### 3️⃣ Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-### 4️⃣ Configure Environment
-
-Create a `.env` file in the root directory:
-
-```
-GROQ_API_KEY=your_groq_api_key_here
-```
-
----
-
-### 5️⃣ Run the application
-
-```bash
-python start.py
-```
-
-This launches:
-
-* FastAPI backend
-* Streamlit frontend
-
----
-
-## 🔌 API Endpoints
-
-### POST /restaurants/search
-
-Search restaurant catalog by filters.
-
-### POST /reservations
-
-Create reservation with validation.
-
----
-
-## 🧩 Limitations
-
-* JSON-based prototype storage
-* No cancellation or modification of reservations
-* No advanced time-slot validation
-* Sequential tool execution only
-* No authentication layer
-
----
-
-## 🚀 Future Enhancements
-
-* PostgreSQL database integration
-* Parallel multi-tool planning
-* Reservation modification & cancellation
-* Menu-level RAG integration
-* Authentication & rate limiting
-* Docker + Cloud deployment
-
----
-
-## 🧠 Technologies Used
-
-* Python 3.9+
-* Groq API (LLaMA model)
-* FastAPI
-* Streamlit
-* Pydantic
-* Requests
-* Uvicorn
-
----
-
-## 🎯 Why This Project Matters
-
-This project demonstrates:
-
-* Agentic AI system design
-* Tool-calling architecture
-* LLM + backend integration
-* Guardrail implementation
-* Modular scalable architecture
-* Real-world business workflow modeling
-
+## GoodFoods Reservation System
+
+### Overview
+GoodFoods is a conversational AI that helps users discover restaurants and book tables across Bangalore. It uses OpenAI function-calling to search restaurants and confirm reservations via a FastAPI backend, wrapped in a modern Streamlit chat UI.
+
+### Repository Structure
+- `app_goodfoods.py`: Streamlit frontend (chat UI, live agent trace, theming)
+- `agent/conversation_engine.py`: Agent core (OpenAI calls, tool handling)
+- `agent/toolkit.py`: Tool definitions (Groq(Llama) function schemas)
+- `agent/prompt_library.py`: System prompts and few-shot examples
+- `data/service_api.py`: FastAPI backend (search and reservation endpoints)
+- `data/restaurant_list.json`: Restaurant catalog
+- `data/bookings_list.json`: Stored reservations
+- `start.py`: One-command launcher (starts API then UI)
+
+## Sample Converstions 
+### Insufficient information
+<img width="1704" height="836" alt="Screenshot 2025-11-02 at 10 04 10 PM" src="https://github.com/user-attachments/assets/5a55ff7e-0088-402e-bda9-5c021c653e5b" />
+
+### Cuisine based
+<img width="1704" height="1006" alt="Screenshot 2025-11-02 at 10 02 04 PM" src="https://github.com/user-attachments/assets/75891c43-a24a-44f4-82a2-f1b17ffc6cf1" />
+
+### Incorrect information
+<img width="1386" height="918" alt="Screenshot 2025-11-02 at 10 17 41 PM" src="https://github.com/user-attachments/assets/a7d52be9-9a6a-44fd-99cb-fb87de25e2d0" />
+
+### Guardrail (Max party size check)
+<img width="1389" height="918" alt="Screenshot 2025-11-02 at 10 05 28 PM" src="https://github.com/user-attachments/assets/790df4b6-122a-48dc-803c-d99efc330834" />
+
+
+### Setup Instructions
+1) Python 3.9+ recommended
+2) Install dependencies:
+   - `pip install -r requirements.txt`
+3) Configure environment:
+   - Create `.env` with `Groq_API_KEY=YOUR_KEY`
+4) Optional data edits:
+   - Update `data/restaurant_list.json` for your venues
+5) Run the stack:
+   - `python start.py`
+
+### How It Works (High-Level)
+1) UI collects user input and maintains `st.session_state.messages`.
+2) First model call (tools enabled) plans and may return tool calls.
+3) Tools are executed via FastAPI and results appended to the chat.
+4) Second model call (tools disabled) generates the final assistant reply.
+5) The “Agent thinking & tool activity (live)” panel shows plan, tool args, results, and finalization.
+
+### Tools (Function-Calling)
+- `lookup_dining_options`:
+  - Inputs: any of name, location, cuisine, operating_hours, operating_days, capacities
+  - Output: ranked restaurant matches (or curated top list if empty query)
+- `confirm_table_booking`:
+  - Inputs: restaurant_id, orderer_name, orderer_contact, party_size, reservation_date, reservation_time
+  - Output: reservation confirmation with `order_id` (or capacity/validation error)
+
+### Documentation of Prompt Engineering Approach
+- Purpose framing + brand context (GoodFoods in Bangalore)
+- Clear “Typical Task” flow: discover → decide → collect details → confirm
+- Tool descriptions with when-to-use, required fields, and guardrails
+- Few-shot examples to steer behavior (handling missing info, capacity issues)
+- Inline constraints (don’t hallucinate, avoid placeholders, friendly tone)
+
+### Business Strategy Summary
+- Problem: Manual reservation workflows are slow and costly.
+- Solution: AI agent that handles discovery and booking end-to-end, 24/7.
+- Value:
+  - Increase conversion (guided flows + quick suggestions)
+  - Reduce staffing costs (self-serve bookings)
+  - Improve CX (consistent answers, instant confirmations)
+- KPIs: conversion rate, bookings completed, average time-to-book, deflection from human agents.
+
+### Assumptions
+- Users intend to discover/book GoodFoods restaurants in Bangalore.
+- Prototype uses JSON files as data stores (no external DB).
+- Single-tenant brand and city context (GoodFoods Bangalore).
+
+### Limitations
+- No sequential/parallel multi-tool planning within a single model turn (tools are executed sequentially between turns).
+- No dedicated date/time validation tool; relies on prompt guidance and backend checks.
+- No cancellation or modification of existing reservations.
+- Basic phone validation; no OTP verification.
+
+### Future Enhancements
+- Parallel/Sequential tool strategies inside the agent loop for faster decisions.
+- Separate DB schema and endpoints for menus, enabling food/menu Q&A and upsell flows.
+- Proper date/time interpretation service (holidays, closures, slotting).
+- Reservation lifecycle: edit/cancel, notifications, reminders, no-show handling.
+- Authentication for staff dashboards and rate limiting/spam controls.
+
+### Current Technical Implementation
+- LLM: Groq(Llama) 
+- Tool Calling: Groq function-calling → FastAPI endpoints
+- Guardrails: function-text leakage detection and placeholder checks
+- Frontend: Streamlit chat UI with live trace (`app_goodfoods.py`)
+- Data: JSON-based catalog and booking store (prototype)
+- Launcher: `start.py` boots `data/service_api.py` then `app_goodfoods.py`
+
+### API Endpoints
+- `POST /restaurants/search` → `search_restaurant_information`
+- `POST /reservations` → `make_new_order`
+
+### Example Conversations
+See `agent/prompt_library.py` few-shot examples for guided flows (missing info, capacity, validation).
